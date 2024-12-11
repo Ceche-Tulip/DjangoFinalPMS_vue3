@@ -45,10 +45,10 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import requestUtil from '@/util/request'
-import qs from 'qs'
-import {ElMessage} from 'element-plus'
+  import {ref} from 'vue'
+  import requestUtil from '@/util/request'
+  import qs from 'qs'  // 处理对象转url
+  import {ElMessage} from 'element-plus'  // 提示框组件
 const loginForm = ref({
   username: '',
   password: ''
@@ -59,7 +59,7 @@ const loginRules = {
 };
 const loginRef = ref(null)
 const handleLogin = () => {
-  loginRef.value.validate(async (valid) => {
+  loginRef.value.validate(async (valid) => {  // 异步等待
     if (valid) {
       let result = await requestUtil.post("user/login?" + qs.stringify(loginForm.value))
       console.log(result)
