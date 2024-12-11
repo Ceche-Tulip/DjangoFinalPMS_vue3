@@ -25,7 +25,7 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-checkbox style="margin:0 0 25px 0;">记住密码</el-checkbox>
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
             size="large"
@@ -49,33 +49,65 @@
   import requestUtil from '@/util/request'
   import qs from 'qs'  // 处理对象转url
   import {ElMessage} from 'element-plus'  // 提示框组件
-const loginForm = ref({
-  username: '',
-  password: ''
-})
-const loginRules = {
-  username: [{required: true, trigger: "blur", message: "请输入您的账号"}],
-  password: [{required: true, trigger: "blur", message: "请输入您的密码"}]
-};
-const loginRef = ref(null)
-const handleLogin = () => {
-  loginRef.value.validate(async (valid) => {  // 异步等待
-    if (valid) {
-      let result = await requestUtil.post("user/login?" + qs.stringify(loginForm.value))
-      console.log(result)
-      let data = result.data
-      if (data.code == 200) {
-        ElMessage.success(data.info)
-        window.sessionStorage.setItem("token", data.token)
-        window.sessionStorage.setItem("currentUser", JSON.stringify(data.user))
-      } else {
-        ElMessage.error(data.info)
-      }
-    } else {
-      console.log("验证失败")
-    }
+  import Cookies from "js-cookie";
+  import { encrypt, decrypt } from "@/util/jsencrypt";
+
+
+
+
+  const loginForm = ref({
+    username: '',
+    password: '',
+    rememberMe: false
   })
-}
+  const loginRules = {
+    username: [{required: true, trigger: "blur", message: "请输入您的账号"}],
+    password: [{required: true, trigger: "blur", message: "请输入您的密码"}]
+  };
+  const loginRef = ref(null)
+  const handleLogin = () => {
+    loginRef.value.validate(async (valid) => {  // 异步等待
+      if (valid) {
+        let result = await requestUtil.post("user/login?" + qs.stringify(loginForm.value))
+        console.log(result)
+        let data = result.data
+        if (data.code == 200) {
+          ElMessage.success(data.info)
+          window.sessionStorage.setItem("token", data.token)
+          window.sessionStorage.setItem("currentUser", JSON.stringify(data.user))
+          // 勾选了需要记住密码设置在 cookie 中设置记住用户名和密码
+          if (loginForm.value.rememberMe) {
+            Cookies.set("username", loginForm.value.username, { expires: 30 });
+            Cookies.set("password", encrypt(loginForm.value.password), { expires: 30 });
+            Cookies.set("rememberMe", loginForm.value.rememberMe, { expires: 30 });
+          } else {
+            // 否则移除
+            Cookies.remove("username");
+            Cookies.remove("password");
+            Cookies.remove("rememberMe");
+          }
+        } else {
+          ElMessage.error(data.info)
+        }
+      } else {
+        console.log("验证失败")
+      }
+    })
+  }
+
+  function getCookie() {
+    const username = Cookies.get("username");
+    const password = Cookies.get("password");
+    const rememberMe = Cookies.get("rememberMe");
+    loginForm.value = {
+      username: username === undefined ? loginForm.value.username : username,
+      password: password === undefined ? loginForm.value.password : decrypt(password),  // decrypt解密
+      rememberMe: rememberMe === undefined ? false : Boolean(rememberMe)
+    };
+  }
+
+  getCookie();
+
 </script>
 
 <style lang="scss" scoped>
