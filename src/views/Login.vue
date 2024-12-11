@@ -67,6 +67,7 @@ const handleLogin = () => {
       if (data.code == 200) {
         ElMessage.success(data.info)
         window.sessionStorage.setItem("token", data.token)
+        window.sessionStorage.setItem("currentUser", JSON.stringify(data.user))
       } else {
         ElMessage.error(data.info)
       }
