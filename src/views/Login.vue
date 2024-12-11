@@ -10,9 +10,7 @@
             auto-complete="off"
             placeholder="账号"
         >
-          <template #prefix>
-            <svg-icon icon="user"/>
-          </template>
+          <template #prefix><svg-icon icon="user" /></template>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -23,8 +21,7 @@
             auto-complete="off"
             placeholder="密码"
         >
-          <template #prefix>
-            <svg-icon icon="password"/>
+          <template #prefix><svg-icon icon="password"/>
           </template>
         </el-input>
       </el-form-item>
