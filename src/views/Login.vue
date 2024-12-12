@@ -39,7 +39,7 @@
     </el-form>
     <!-- 底部 -->
     <div class="el-login-footer">
-      <span>Copyright © 2013-2025 <a href="https://www.python222.com" target="_blank">python222.com</a> 版权所有.</span>
+      <span><a href="https://github.com/Ceche-Tulip/DjangoFinalPMS_vue3" target="_blank">Django期末大作业</a></span>
     </div>
   </div>
 </template>
@@ -51,6 +51,7 @@
   import {ElMessage} from 'element-plus'  // 提示框组件
   import Cookies from "js-cookie";
   import { encrypt, decrypt } from "@/util/jsencrypt";
+  import router from "@/router";
 
 
 
@@ -86,6 +87,7 @@
             Cookies.remove("password");
             Cookies.remove("rememberMe");
           }
+          router.replace("/")
         } else {
           ElMessage.error(data.info)
         }

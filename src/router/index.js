@@ -5,7 +5,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../layout/index.vue')  // 配置登陆的路由
   },
   {
     path: '/login',
