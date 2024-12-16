@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">Django后台管理系统</h3>
+      <h3 class="title">后台权限管理系统</h3>
       <el-form-item prop="username">
         <el-input
             v-model="loginForm.username"
@@ -25,6 +25,8 @@
           </template>
         </el-input>
       </el-form-item>
+
+
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
@@ -65,7 +67,9 @@
     username: [{required: true, trigger: "blur", message: "请输入您的账号"}],
     password: [{required: true, trigger: "blur", message: "请输入您的密码"}]
   };
+
   const loginRef = ref(null)
+
   const handleLogin = () => {
     loginRef.value.validate(async (valid) => {  // 异步等待
       if (valid) {
