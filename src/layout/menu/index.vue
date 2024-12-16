@@ -21,7 +21,7 @@
         </el-icon>
         <span>{{ menu.name }}</span>
       </template>
-      <el-menu-item :index="path" v-for="item in menu.children" @click="openTab(item)">
+      <el-menu-item :index="item.path" v-for="item in menu.children" @click="openTab(item)">
         <el-icon>
           <svg-icon :icon="item.icon"/>
         </el-icon>

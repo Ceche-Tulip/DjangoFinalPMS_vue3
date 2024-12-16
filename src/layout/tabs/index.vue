@@ -5,6 +5,7 @@
       class="demo-tabs"
       closable
       @tab-remove="removeTab"
+      @tab-click="clickTab"
   >
     <el-tab-pane
         v-for="item in editableTabs"
@@ -17,8 +18,10 @@
 </template>
 
 <script setup>
-import { ref, watch} from 'vue'
+import {ref,watch} from 'vue'
 import store from '@/store'
+import {userRouter} from 'vue-router'
+const router=userRouter()
 
 const editableTabsValue = ref(store.state.editableTabsValue)
 const editableTabs = ref(store.state.editableTabs)
@@ -44,15 +47,19 @@ const removeTab = (targetName) => {
   store.state.editableTabs=editableTabs.value
 }
 
+const clickTab=(target)=>{
+  console.log(target.props.label)
+  router.push({name: target.props.label})
+}
+
 const refreshTabs=()=>{
   editableTabs.value=store.state.editableTabs
   editableTabsValue.value=store.state.editableTabsValue
-
 }
 
 watch(store.state,()=>{
   refreshTabs()
-}, {deep:true, immediate:true})
+},{deep:true,immediate:true})
 </script>
 
 <style>
@@ -62,4 +69,13 @@ watch(store.state,()=>{
   font-size: 32px;
   font-weight: 600;
 }
+
+.el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+  background-color: lightgray;
+}
+
+.el-main {
+  padding: 0px;
+}
+
 </style>
