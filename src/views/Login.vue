@@ -79,6 +79,8 @@
         if (data.code == 200) {
           ElMessage.success(data.info)
           window.sessionStorage.setItem("token", data.token)
+          const currentUser=data.user
+          currentUser.roles=data.roles
           window.sessionStorage.setItem("currentUser", JSON.stringify(data.user))
           window.sessionStorage.setItem("menuList", JSON.stringify(data.menuList))
           // 勾选了需要记住密码设置在 cookie 中设置记住用户名和密码
