@@ -45,6 +45,8 @@ const removeTab = (targetName) => {
 
   store.state.editableTabsValue=editableTabsValue.value
   store.state.editableTabs=editableTabs.value
+
+  router.push({path:activeName})
 }
 
 const clickTab=(target)=>{

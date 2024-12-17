@@ -1,0 +1,12 @@
+<template>
+  个人中心
+</template>
+
+
+<script setup>
+
+</script>
+
+<style lang="scss" scoped>
+
+</style>
