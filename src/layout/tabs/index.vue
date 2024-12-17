@@ -80,4 +80,8 @@ watch(store.state,()=>{
   padding: 0px;
 }
 
+.el-tabs__content {
+  padding: 0px !important;;
+}
+
 </style>
