@@ -60,7 +60,7 @@ import {Search, Delete, DocumentAdd, Edit, Tools, RefreshRight} from '@element-p
 import {ref} from 'vue'
 import requestUtil, {getServerUrl} from "@/util/request";
 import {ElMessage, ElMessageBox} from 'element-plus'
-// import Dialog from './components/dialog'
+import Dialog from './components/dialog'
 // import MenuDialog from './components/menuDialog'
 
 const id = ref(-1)
