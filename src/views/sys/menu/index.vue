@@ -51,6 +51,8 @@
     </el-table>
 
   </div>
+  <Dialog v-model="dialogVisible" :tableData="tableData" :dialogVisible="dialogVisible" :id="id"
+          :dialogTitle="dialogTitle" @initMenuList="initMenuList"></Dialog>
 
 </template>
 
@@ -59,12 +61,32 @@ import {Search, Delete, DocumentAdd, Edit, Tools, RefreshRight} from '@element-p
 import {ref} from 'vue'
 import requestUtil, {getServerUrl} from "@/util/request";
 import {ElMessage, ElMessageBox} from 'element-plus'
+import Dialog from './components/dialog'
 const tableData = ref([])
 const initMenuList = async () => {
   const res = await requestUtil.get("menu/treeList");
   tableData.value = res.data.treeList;
 }
+
 initMenuList();
+
+const id = ref(-1)
+
+const dialogVisible = ref(false)
+
+const dialogTitle = ref('')
+
+const handleDialogValue = (menuId) => {
+  if (menuId) {
+    id.value = menuId;
+    dialogTitle.value = "菜单修改"
+  } else {
+    id.value = -1;
+    dialogTitle.value = "菜单添加"
+  }
+  dialogVisible.value = true
+}
+
 </script>
 <style lang="scss" scoped>
 .header {
