@@ -75,6 +75,8 @@
     />
     <Dialog v-model="dialogVisible" :dialogVisible="dialogVisible" :id="id" :dialogTitle="dialogTitle"
             @initUserList="initUserList"></Dialog>
+    <RoleDialog v-model="roleDialogVisible" :sysRoleList="sysRoleList" :roleDialogVisible="roleDialogVisible" :id="id"
+                @initUserList="initUserList"></RoleDialog>
   </div>
 </template>
 
@@ -84,6 +86,7 @@ import {Search, Delete, DocumentAdd, Edit, Tools, RefreshRight} from '@element-p
 import {ref} from "vue";
 import Dialog from './components/dialog'
 import {ElMessage} from 'element-plus'
+import RoleDialog from './components/roleDialog'
 
 const tableData=ref([])
 const total=ref(0)
@@ -100,6 +103,11 @@ const dialogTitle = ref("")
 const id = ref(-1)
 
 const delBtnStatus = ref(true)
+
+const sysRoleList = ref([])
+
+const roleDialogVisible = ref(false)
+
 const multipleSelection = ref([])
 const handleSelectionChange = (selection) => {
   console.log("勾选了")
@@ -196,6 +204,14 @@ const statusChangeHandle = async (row) => {
 }
 
 initUserList()
+
+const handleRoleDialogValue = (userId, roleList) => {
+  console.log("roleList: ", roleList);
+  console.log("id:", userId);
+  id.value = userId;
+  sysRoleList.value = roleList;
+  roleDialogVisible.value = true;
+}
 
 </script>
 
