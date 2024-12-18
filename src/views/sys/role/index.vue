@@ -61,7 +61,8 @@ import {ref} from 'vue'
 import requestUtil, {getServerUrl} from "@/util/request";
 import {ElMessage, ElMessageBox} from 'element-plus'
 import Dialog from './components/dialog'
-// import MenuDialog from './components/menuDialog'
+import MenuDialog from './components/menuDialog'
+
 
 const id = ref(-1)
 const dialogVisible = ref(false)

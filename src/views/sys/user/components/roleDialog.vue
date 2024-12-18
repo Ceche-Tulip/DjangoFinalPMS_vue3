@@ -96,7 +96,9 @@ const handleClose = () => {
 }
 
 const handleConfirm = () => {
+
   formRef.value.validate(async (valid) => {
+
     if (valid) {
       let result = await requestUtil.post("user/grantRole", {"id": form.value.id, "roleIds": form.value.checkedRoles});
       let data = result.data;
