@@ -137,7 +137,6 @@ const handleCurrentChange=(pageNum)=>{
   initUserList()
 }
 
-initUserList()
 
 const handleDelete = async (id) => {
   var ids = []
@@ -162,6 +161,41 @@ const handleDelete = async (id) => {
     })
   }
 }
+
+const handleResetPassword = async (id) => {
+  const res = await requestUtil.get("user/resetPassword?id=" + id)
+  if (res.data.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '执行成功!'
+    })
+    initUserList();
+  } else {
+    ElMessage({
+      type: 'error',
+      message: res.data.msg,
+    })
+  }
+}
+
+
+const statusChangeHandle = async (row) => {
+  let res = await requestUtil.post("user/status", {id: row.id, status: row.status});
+  if (res.data.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '执行成功!'
+    })
+  } else {
+    ElMessage({
+      type: 'error',
+      message: res.data.msg,
+    })
+    initUserList();
+  }
+}
+
+initUserList()
 
 </script>
 
