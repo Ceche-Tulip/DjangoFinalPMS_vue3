@@ -1,13 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: '主页',
-    component: () => import('../layout/index.vue'),  // 配置登陆的路由
-    redirect:'/index',
-    children:[
+    component: () => import('../layout/index.vue'),
+    children: [
       {
         path: '/index',
         name: '首页',
@@ -48,13 +46,29 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')  // 配置登陆的路由
+    component: () => import('../views/Login.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+function isLoggedIn() {
+  return sessionStorage.getItem('currentUser') !== null
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login') {
+    if (!isLoggedIn()) {
+      next('/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
